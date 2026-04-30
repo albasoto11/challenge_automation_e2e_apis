@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Karate Timeline</title>
+    <style>
+      body, html { font-family: arial, sans-serif; font-size: 11pt; }
+      #visualization { box-sizing: border-box; width: 100%; height: 300px; }
+      .vis-item.failed { background-color: #F2928C; }
+      .page-heading { padding: 0.5em; margin-bottom: 0.5em; background-color: lightcyan; border: 1px solid gray; }
+    </style>
+    <script src="res/vis.min.js"></script>
+    <link href="res/vis.min.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="page-heading">
+      <a href="karate-summary.html">Summary</a>
+    </div>     
+    <div id="visualization"></div>
+    <script>
+var groups = [{"content":"pool-1-thread-1","id":1},{"content":"pool-1-thread-2","id":2},{"content":"pool-1-thread-3","id":3},{"content":"pool-1-thread-4","id":4},{"content":"pool-1-thread-5","id":5},{"content":"pool-1-thread-6","id":6},{"content":"pool-1-thread-7","id":7},{"content":"pool-1-thread-8","id":8}];
+var items = [{"id":1,"group":1,"content":"features\/pet[1:20]","start":1777556798253,"end":1777556798559,"title":"features\/pet[1:20] 08:46:38.253-08:46:38.559 [POST-01] Crear mascota y guardar ID para consulta posterior"},{"id":2,"group":2,"content":"features\/pet[2:35]","start":1777556798253,"end":1777556798542,"title":"features\/pet[2:35] 08:46:38.253-08:46:38.542 [POST-02] Validar el estado available del registro"},{"id":3,"group":3,"content":"features\/pet[3:43]","start":1777556798307,"end":1777556798598,"title":"features\/pet[3:43] 08:46:38.307-08:46:38.598 [POST-03] POST \/pet\/ tiene datos en el cuerpo","className":"failed"},{"id":4,"group":4,"content":"features\/pet[4:51]","start":1777556798322,"end":1777556798621,"title":"features\/pet[4:51] 08:46:38.322-08:46:38.621 [POST-04] POST \/pet\/ sin el campo name (campo requerido)"},{"id":5,"group":5,"content":"features\/pet[5:58]","start":1777556798280,"end":1777556798553,"title":"features\/pet[5:58] 08:46:38.280-08:46:38.553 [POST-05] No puede tener body vacío {}","className":"failed"},{"id":6,"group":6,"content":"features\/pet[6:70]","start":1777556798312,"end":1777556798607,"title":"features\/pet[6:70] 08:46:38.312-08:46:38.607 [GET-01] Consultar GET \/pet\/{petId} - Consultar por ID","className":"failed"},{"id":7,"group":7,"content":"features\/pet[7:79]","start":1777556798321,"end":1777556798622,"title":"features\/pet[7:79] 08:46:38.321-08:46:38.622 [GET-02] Consultar mascota NO existente"},{"id":8,"group":8,"content":"features\/pet[8:86]","start":1777556798308,"end":1777556798622,"title":"features\/pet[8:86] 08:46:38.308-08:46:38.622 [GET-03] Consultar ID respuesta coincida con el 354061","className":"failed"},{"id":9,"group":2,"content":"features\/pet[9:94]","start":1777556798546,"end":1777556798801,"title":"features\/pet[9:94] 08:46:38.546-08:46:38.801 [GET-04] Validar que datos no están vacíos","className":"failed"},{"id":10,"group":5,"content":"features\/pet[10:108]","start":1777556798557,"end":1777556799271,"title":"features\/pet[10:108] 08:46:38.557-08:46:39.271 [PUT-01] Actualizar nombre y status a \"sold\""},{"id":11,"group":1,"content":"features\/pet[11:143]","start":1777556798564,"end":1777556798805,"title":"features\/pet[11:143] 08:46:38.564-08:46:38.805 [PUT-02] PUT \/pet\/ con ID inexistente","className":"failed"},{"id":12,"group":3,"content":"features\/pet[12:164]","start":1777556798603,"end":1777556799046,"title":"features\/pet[12:164] 08:46:38.603-08:46:39.046 [GET\/status-01] Buscar mascotas con status \"available\""},{"id":13,"group":6,"content":"features\/pet[13:172]","start":1777556798620,"end":1777556798882,"title":"features\/pet[13:172] 08:46:38.620-08:46:38.882 [GET\/status-02] findByStatus sin parámetro status","className":"failed"},{"id":14,"group":4,"content":"features\/pet[14:178]","start":1777556798626,"end":1777556798900,"title":"features\/pet[14:178] 08:46:38.626-08:46:38.900 [GET\/status-03] findByStatus con status vacío"}];
+</script>
+    <script>
+      var container = document.getElementById('visualization');
+      var timeline = new vis.Timeline(container);
+      timeline.setOptions({groupOrder: 'content'});
+      timeline.setGroups(new vis.DataSet(groups));
+      timeline.setItems(new vis.DataSet(items));
+    </script>
+  </body>
+</html>

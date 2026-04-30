@@ -1,0 +1,79 @@
+// ============================================================
+// build.gradle — Serenity BDD + Screenplay + Cucumber + JUnit 5
+// Basado en la documentación oficial: serenity-bdd.github.io
+// ============================================================
+
+plugins {
+    id 'java'
+    id 'net.serenity-bdd.serenity-gradle-plugin' version '5.3.7'
+}
+
+// ── Versiones centralizadas (fuente: documentación oficial) ──
+ext {
+    serenity_version          = '5.3.7'
+    cucumber_version          = '7.14.0'
+    junit_platform_version    = '6.0.3'
+    logback_version           = '1.5.18'
+    assertj_version           = '3.27.3'
+    lombokVersion = '1.18.44'
+}
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+
+    // ── Serenity Core ─────────────────────────────────────────
+    implementation "net.serenity-bdd:serenity-core:${serenity_version}"
+
+    // ── Serenity + Cucumber (integración oficial) ──────────────
+    implementation "net.serenity-bdd:serenity-cucumber:${serenity_version}"
+
+    // ── Screenplay (requerido según doc oficial) ───────────────
+   implementation "net.serenity-bdd:serenity-screenplay:${serenity_version}"
+    implementation "net.serenity-bdd:serenity-model:${serenity_version}"
+    implementation "net.serenity-bdd:serenity-screenplay-webdriver:${serenity_version}"
+    implementation "net.serenity-bdd:serenity-screenplay-rest:${serenity_version}"
+    implementation "net.serenity-bdd:serenity-junit5:${serenity_version}"
+
+    // ── Serenity Ensure (assertions de Screenplay) ────────────
+    implementation "net.serenity-bdd:serenity-ensure:${serenity_version}"
+
+    // ── Cucumber JVM ──────────────────────────────────────────
+    testImplementation "io.cucumber:cucumber-java:${cucumber_version}"
+    testImplementation "io.cucumber:cucumber-junit-platform-engine:${cucumber_version}"
+
+    // ── JUnit 5 Platform (requerido por doc oficial) ──────────
+    testImplementation "org.junit.platform:junit-platform-suite:${junit_platform_version}"
+
+    // ── Utilidades ────────────────────────────────────────────
+    testImplementation "org.assertj:assertj-core:${assertj_version}"
+    implementation     "ch.qos.logback:logback-classic:${logback_version}"
+
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+}
+
+test {
+    useJUnitPlatform()
+    systemProperties System.getProperties()
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+        showStandardStreams = true
+    }
+    finalizedBy aggregate
+}
+
+serenity {
+    reports = ['single-page-html']
+}
+
+defaultTasks 'clean', 'test', 'aggregate'

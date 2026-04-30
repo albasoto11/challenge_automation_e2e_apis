@@ -1,0 +1,1 @@
+rootProject.name = "demo-serenity-screenplay-gradle"
